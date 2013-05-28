@@ -5,13 +5,17 @@ class target {
   float d;
   float r;
   float speed;
+  float maxdist;
 
   target() {
-    x=random(0, width);
-    y=0;
+//    x=random(0, width);
+    y=random(0,height-150);
+//    y=0;
+    x=0;
     d=30;
     speed=random(1, 3);
     r=d/2;
+    maxdist=r;
   }
   void display() {
     noStroke();
@@ -20,8 +24,17 @@ class target {
   }
 
   void drop() {
-    y=y+speed;
+    //    y=y+speed;
+    x+=speed;
+  }
+  boolean isTouching(float mx, float my) {
+    if (dist(x, y, mx, my)<=maxdist) {
+      print("touch");
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }
-
 
