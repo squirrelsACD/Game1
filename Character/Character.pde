@@ -8,17 +8,22 @@ class character {
   }
   void display() {
     image(homer, x, y, homerlength, homerheight);
-    //    x=mouseX-50;
     if (keyPressed) {
       if (key == 'a' || key == 'A') {
-        x-=5;
+        if (x>=0) {
+          x-=5;
+        }
       }
       if (key == 'd' || key == 'D') {
-        x+=5;
+        if (x+homerlength<=width) {
+          x+=5;
+        }
       }
     }
   }
 }
+
+
 
 
 //fix the index error if it shows up again

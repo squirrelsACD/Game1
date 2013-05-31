@@ -18,7 +18,7 @@ class bullet {
     ycenter=(y+maggieheight)/2;
   }
   void move() {
-    y=y-yspeed;
+    y-=yspeed;
   }
 }
 

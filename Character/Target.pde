@@ -9,7 +9,7 @@ class target {
 
   target() {
 //    x=random(0, width);
-    y=random(0,height-150);
+    y=random(150,height-150);
 //    y=0;
     x=0;
     d=30;

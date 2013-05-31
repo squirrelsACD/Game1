@@ -1,9 +1,13 @@
 PImage background;
 PImage homer;
 PImage maggie;
+PImage peter;
+PImage stewie;
 character mycharacter;
+partner mypartner;
 ArrayList mytarget = new ArrayList();
 ArrayList mybullet = new ArrayList();
+ArrayList mypartnerbullet = new ArrayList();
 int timer=1000;
 int currentTimer;
 int oldTimer=0;
@@ -16,12 +20,16 @@ void setup() {
   background = loadImage("background.gif");
   homer = loadImage("homer.jpg");
   maggie = loadImage("maggie.jpg");
-  mycharacter= new character();
+  peter = loadImage("peter.png");
+  stewie = loadImage("stewie.png");
+  mycharacter = new character();
+  mypartner = new partner();
 }
 
 void draw() {
   image(background, 0, 0, displayWidth, displayHeight);
   mycharacter.display();
+  mypartner.display();
   for (int ti=0; ti<mytarget.size();ti++) {
     target t =(target)mytarget.get(ti);
     t.display();
@@ -35,16 +43,30 @@ void draw() {
         mytarget.remove(ti);
       }
     }
+    for (int pbi=0; pbi<mypartnerbullet.size();pbi++) {
+      partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
+      if (t.isTouching(pb.x, pb.y)) {
+        mytarget.remove(ti);
+      }
+      if (t.isTouching(pb.x+pb.stewielength, pb.y)) {
+        mytarget.remove(ti);
+      }
+    }
   }
   for (int bi=0; bi<mybullet.size();bi++) {
     bullet b = (bullet)mybullet.get(bi);
     b.display();
     b.move();
   }
-  currentTimer=millis();
-  if (currentTimer-oldTimer>timer) {
-    oldTimer=currentTimer;
-    mytarget.add(new target());
+  for (int pbi=0; pbi<mypartnerbullet.size(); pbi++) {
+    partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
+    pb.display();
+    pb.move();
+    currentTimer=millis();
+    if (currentTimer-oldTimer>timer) {
+      oldTimer=currentTimer;
+      mytarget.add(new target());
+    }
   }
 
   for (int bi=0; bi<mybullet.size();bi++) {
@@ -53,17 +75,26 @@ void draw() {
       mybullet.remove(bi);
     }
   }
+  for (int pbi=0; pbi<mypartnerbullet.size(); pbi++) {
+    partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
+    if (pb.y<0) {
+      mypartnerbullet.remove(pbi);
+    }
+  }
   currentPrizeTimer=millis();
-//    NEED TO WORK ON THE FOLLOWING CODE
-//  if (currentPrizeTimer-oldPrizeTimer>prizeTimer) {
-//    fill(255, 255, 255);
-//    ellipse(width/2, height/2, 200, 200);
-//    oldPrizeTimer=currentPrizeTimer;
-//  }
+  //   BRIAN, WORK ON THE FOLLOWING CODE. IT IS TO DROP POWERUPS AND POWERDOWNS RANDOMLY.  
+  //  if (currentPrizeTimer-oldPrizeTimer>prizeTimer) {
+  //    fill(255, 255, 255);
+  //    ellipse(width/2, height/2, 200, 200);
+  //    oldPrizeTimer=currentPrizeTimer;
+  //  }
 }
 void keyReleased() {
-  if (key == 's' || key == 'S') {
+  if (key == 'w' || key == 'W') {
     mybullet.add(new bullet());
+  }
+  if (key == '8') {
+    mypartnerbullet.add(new partnerbullet());
   }
 }
 
