@@ -14,6 +14,8 @@ int oldTimer=0;
 int prizeTimer=5000;
 int currentPrizeTimer;
 int oldPrizeTimer=0;
+int scorei=0; //player 1's score
+int scoreii=0; //player 2's score
 
 void setup() {
   size(750, 750);
@@ -28,6 +30,12 @@ void setup() {
 
 void draw() {
   image(background, 0, 0, displayWidth, displayHeight);
+  textSize(50);
+  fill(255);
+  text(scoreii, width/10, height/7);
+  textSize(50);
+  fill(255);
+  text(scorei, width/1.2, height/1.15);
   mycharacter.display();
   mypartner.display();
   for (int ti=0; ti<mytarget.size();ti++) {
@@ -37,6 +45,7 @@ void draw() {
     for (int bi=0; bi<mybullet.size();bi++) {
       bullet b = (bullet)mybullet.get(bi);
       if (t.isTouching(b.x, b.y)) {
+      scorei++;
         mytarget.remove(ti);
       }
       if (t.isTouching(b.x+b.maggielength, b.y)) {
@@ -46,6 +55,7 @@ void draw() {
     for (int pbi=0; pbi<mypartnerbullet.size();pbi++) {
       partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
       if (t.isTouching(pb.x, pb.y)) {
+      scoreii++;
         mytarget.remove(ti);
       }
       if (t.isTouching(pb.x+pb.stewielength, pb.y)) {
