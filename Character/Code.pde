@@ -33,36 +33,49 @@ void draw() {
   textSize(50);
   fill(255);
   text(scoreii, width/10, height/7);
+  text(mypartner.life, width-width/10, height/7);
   textSize(50);
   fill(255);
   text(scorei, width/1.2, height/1.15);
+  text(mycharacter.life, width-width/1.2, height/1.15);
   mycharacter.display();
   mypartner.display();
   for (int ti=0; ti<mytarget.size();ti++) {
     target t =(target)mytarget.get(ti);
     t.display();
     t.drop();
+    //when character's bullet hits the target and to increase the score
     for (int bi=0; bi<mybullet.size();bi++) {
       bullet b = (bullet)mybullet.get(bi);
       if (t.isTouching(b.x, b.y)) {
-      scorei++;
+        scorei++;
         mytarget.remove(ti);
       }
       if (t.isTouching(b.x+b.maggielength, b.y)) {
+        scorei++;
         mytarget.remove(ti);
       }
+      if (mypartner.PeterIsHit(b.MaggieCenterX, b.MaggieCenterY)) {
+        mypartner.life=mypartner.life-1;
+      }
     }
+    //when partner's bullet hits the tarfet and to increase the score
     for (int pbi=0; pbi<mypartnerbullet.size();pbi++) {
       partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
       if (t.isTouching(pb.x, pb.y)) {
-      scoreii++;
+        scoreii++;
         mytarget.remove(ti);
       }
       if (t.isTouching(pb.x+pb.stewielength, pb.y)) {
+        scoreii++;
         mytarget.remove(ti);
+      }
+      if (mycharacter.HomerIsHit(pb.x, pb.y)) {
+        mycharacter.life=mycharacter.life-1;
       }
     }
   }
+  //why does this move extremely fast when placed on line 62
   for (int bi=0; bi<mybullet.size();bi++) {
     bullet b = (bullet)mybullet.get(bi);
     b.display();
@@ -72,13 +85,14 @@ void draw() {
     partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
     pb.display();
     pb.move();
-    currentTimer=millis();
-    if (currentTimer-oldTimer>timer) {
-      oldTimer=currentTimer;
-      mytarget.add(new target());
-    }
   }
-
+  //to drop new targets
+  currentTimer=millis();
+  if (currentTimer-oldTimer>timer) {
+    oldTimer=currentTimer;
+    mytarget.add(new target());
+  }
+  //to remove the bullets after they leave the screen
   for (int bi=0; bi<mybullet.size();bi++) {
     bullet b = (bullet)mybullet.get(bi);
     if (b.y<0) {

@@ -4,6 +4,8 @@ class character {
   float homerheight=100;
   float x=width/2; 
   float y=650;
+  int life=3;
+  float HomerCenterX;
   character() {
   }
   void display() {
@@ -20,8 +22,19 @@ class character {
         }
       }
     }
+    HomerCenterX=.5*(x+homerlength);
+  }
+  boolean HomerIsHit(float mx, float my) {
+    if (my==y && x<mx && x+homerlength>mx) {
+      print("homerhit");
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }
+
 
 
 

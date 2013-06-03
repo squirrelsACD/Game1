@@ -6,19 +6,20 @@ class bullet {
   float x;
   float y;
   float yspeed=10;
-  float xcenter;
-  float ycenter;
+  float MaggieCenterX;
+  float MaggieCenterY;
   bullet() {
     x=mycharacter.x+mycharacter.homerlength/2-maggielength/2;
     y=mycharacter.y;
   }
   void display() {
     image(maggie, x, y, maggielength, maggieheight);
-    xcenter=(x+maggielength)/2;
-    ycenter=(y+maggieheight)/2;
+    MaggieCenterX=(x+maggielength)/2;
+    MaggieCenterY=(y+maggieheight)/2;
   }
   void move() {
     y-=yspeed;
+    x=x;
   }
 }
 
