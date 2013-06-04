@@ -58,7 +58,6 @@ void draw() {
       if (t.isTouching(b.x, b.y)) {
         scorei++;
         t.hit++;
-        mybullet.remove(bi);
         if (t.hit==4) {
           mytarget.remove(ti);
         }
@@ -66,7 +65,6 @@ void draw() {
       if (t.isTouching(b.x+b.maggielength, b.y)) {
         scorei++;
         t.hit++;
-        mybullet.remove(bi);
         if (t.hit==4) {
           mytarget.remove(ti);
         }
