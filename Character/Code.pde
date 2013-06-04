@@ -56,6 +56,7 @@ void draw() {
         mytarget.remove(ti);
       }
       if (mypartner.PeterIsHit(b.MaggieCenterX, b.MaggieCenterY)) {
+        mybullet.remove(bi);
         mypartner.life=mypartner.life-1;
       }
     }
@@ -71,6 +72,7 @@ void draw() {
         mytarget.remove(ti);
       }
       if (mycharacter.HomerIsHit(pb.x, pb.y)) {
+        mypartnerbullet.remove(pbi);
         mycharacter.life=mycharacter.life-1;
       }
     }
