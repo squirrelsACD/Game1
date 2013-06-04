@@ -20,8 +20,8 @@ int scoreii=0; //player 2's score
 void setup() {
   size(750, 750);
   background = loadImage("background.gif");
-  homer = loadImage("homer.jpg");
-  maggie = loadImage("maggie.jpg");
+  homer = loadImage("homer.png");
+  maggie = loadImage("maggie.png");
   peter = loadImage("peter.png");
   stewie = loadImage("stewie.png");
   mycharacter = new character();
