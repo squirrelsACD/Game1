@@ -57,18 +57,26 @@ void draw() {
       bullet b = (bullet)mybullet.get(bi);
       if (t.isTouching(b.x, b.y)) {
         scorei++;
-        mytarget.remove(ti);
+        t.hit++;
+        if (t.hit==4) {
+          mytarget.remove(ti);
+        }
       }
       if (t.isTouching(b.x+b.maggielength, b.y)) {
         scorei++;
-        mytarget.remove(ti);
+        t.hit++;
+        if (t.hit==4) {
+          mytarget.remove(ti);
+        }
+        //        mytarget.remove(ti);
       }
       if (mypartner.PeterIsHit(b.MaggieCenterX, b.MaggieCenterY)) {
         mybullet.remove(bi);
         mypartner.life=mypartner.life-1;
       }
     }
-    //when partner's bullet hits the tarfet and to increase the score
+
+    //when partner's bullet hits the target and to increase the score
     for (int pbi=0; pbi<mypartnerbullet.size();pbi++) {
       partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
       if (t.isTouching(pb.x, pb.y)) {
@@ -85,6 +93,7 @@ void draw() {
       }
     }
   }
+
   //why does this move extremely fast when placed on line 62
   for (int bi=0; bi<mybullet.size();bi++) {
     bullet b = (bullet)mybullet.get(bi);
@@ -109,12 +118,14 @@ void draw() {
       mybullet.remove(bi);
     }
   }
+
   for (int pbi=0; pbi<mypartnerbullet.size(); pbi++) {
     partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
     if (pb.y<0) {
       mypartnerbullet.remove(pbi);
     }
   }
+
   currentPrizeTimer=millis();
   //   BRIAN, WORK ON THE FOLLOWING CODE. IT IS TO DROP POWERUPS AND POWERDOWNS RANDOMLY.  
   //  if (currentPrizeTimer-oldPrizeTimer>prizeTimer) {
