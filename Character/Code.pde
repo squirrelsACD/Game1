@@ -3,6 +3,10 @@ PImage homer;
 PImage maggie;
 PImage peter;
 PImage stewie;
+PImage brian;
+PImage bart;
+PImage lois;
+PImage marge;
 character mycharacter;
 partner mypartner;
 ArrayList mytarget = new ArrayList();
@@ -24,6 +28,10 @@ void setup() {
   maggie = loadImage("maggie.png");
   peter = loadImage("peter.png");
   stewie = loadImage("stewie.png");
+  brian = loadImage("briancounter.png");
+  bart = loadImage("bartcounter.png");
+  lois = loadImage("griffinlife.png");
+  marge = loadImage("margelife.png");
   mycharacter = new character();
   mypartner = new partner();
 }
