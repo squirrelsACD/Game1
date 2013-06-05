@@ -7,6 +7,7 @@ PImage brian;
 PImage bart;
 PImage lois;
 PImage marge;
+PImage donut;
 character mycharacter;
 partner mypartner;
 ArrayList mytarget = new ArrayList();
@@ -23,6 +24,7 @@ int scoreii=0; //player 2's score
 
 void setup() {
   size(750, 750);
+  donut = loadImage("Donut.png");
   background = loadImage("background.gif");
   homer = loadImage("homer.png");
   maggie = loadImage("maggie.png");
@@ -58,6 +60,7 @@ void draw() {
       if (t.isTouching(b.x, b.y)) {
         scorei++;
         t.hit++;
+        mybullet.remove(bi);
         if (t.hit==4) {
           mytarget.remove(ti);
         }
@@ -65,6 +68,7 @@ void draw() {
       if (t.isTouching(b.x+b.maggielength, b.y)) {
         scorei++;
         t.hit++;
+        mybullet.remove(bi);
         if (t.hit==4) {
           mytarget.remove(ti);
         }
@@ -75,7 +79,6 @@ void draw() {
         mypartner.life=mypartner.life-1;
       }
     }
-
     //when partner's bullet hits the target and to increase the score
     for (int pbi=0; pbi<mypartnerbullet.size();pbi++) {
       partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
@@ -93,7 +96,6 @@ void draw() {
       }
     }
   }
-
   //why does this move extremely fast when placed on line 62
   for (int bi=0; bi<mybullet.size();bi++) {
     bullet b = (bullet)mybullet.get(bi);
@@ -118,14 +120,12 @@ void draw() {
       mybullet.remove(bi);
     }
   }
-
   for (int pbi=0; pbi<mypartnerbullet.size(); pbi++) {
     partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
     if (pb.y<0) {
       mypartnerbullet.remove(pbi);
     }
   }
-
   currentPrizeTimer=millis();
   //   BRIAN, WORK ON THE FOLLOWING CODE. IT IS TO DROP POWERUPS AND POWERDOWNS RANDOMLY.  
   //  if (currentPrizeTimer-oldPrizeTimer>prizeTimer) {
