@@ -29,13 +29,13 @@ class target {
 
   void drop() {
     if (hit==0) {
-      speed=random(1, 3);
+      speed=random(1, 1);
     }
     if (hit==1) {
-      speed=random(3, 5);
+      speed=random(2, 2);
     }
     if (hit==2) {
-      speed=random(5, 7);
+      speed=random(3, 3);
     }
 
     x+=speed;
