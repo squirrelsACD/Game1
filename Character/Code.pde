@@ -8,6 +8,8 @@ PImage bart;
 PImage lois;
 PImage marge;
 PImage donut;
+PImage donut1;
+PImage donut2;
 character mycharacter;
 partner mypartner;
 ArrayList mytarget = new ArrayList();
@@ -25,6 +27,8 @@ int scoreii=0; //player 2's score
 void setup() {
   size(750, 750);
   donut = loadImage("Donut.png");
+  donut1 = loadImage("Donut1.png");
+  donut2 = loadImage("Donut2.png");
   background = loadImage("background.gif");
   homer = loadImage("homer.png");
   maggie = loadImage("maggie.png");
@@ -36,6 +40,7 @@ void setup() {
   marge = loadImage("margelife.png");
   mycharacter = new character();
   mypartner = new partner();
+  BlackBox.init(this);
 }
 
 void draw() {
@@ -61,7 +66,7 @@ void draw() {
         scorei++;
         t.hit++;
         mybullet.remove(bi);
-        if (t.hit==4) {
+        if (t.hit==3) {
           mytarget.remove(ti);
         }
       }
@@ -69,10 +74,9 @@ void draw() {
         scorei++;
         t.hit++;
         mybullet.remove(bi);
-        if (t.hit==4) {
+        if (t.hit==3) {
           mytarget.remove(ti);
         }
-        //        mytarget.remove(ti);
       }
       if (mypartner.PeterIsHit(b.MaggieCenterX, b.MaggieCenterY)) {
         mybullet.remove(bi);
@@ -84,11 +88,19 @@ void draw() {
       partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
       if (t.isTouching(pb.x, pb.y)) {
         scoreii++;
-        mytarget.remove(ti);
+        t.hit++;
+        mypartnerbullet.remove(pbi);
+        if (t.hit==3) {
+          mytarget.remove(ti);
+        }
       }
       if (t.isTouching(pb.x+pb.stewielength, pb.y)) {
         scoreii++;
-        mytarget.remove(ti);
+        t.hit++;
+        mypartnerbullet.remove(pbi);
+        if (t.hit==3) {
+          mytarget.remove(ti);
+        }
       }
       if (mycharacter.HomerIsHit(pb.x, pb.y)) {
         mypartnerbullet.remove(pbi);
@@ -138,7 +150,7 @@ void keyReleased() {
   if (key == 'w' || key == 'W') {
     mybullet.add(new bullet());
   }
-  if (key == '8') {
+  if (key == 'i' || key == 'I') {
     mypartnerbullet.add(new partnerbullet());
   }
 }

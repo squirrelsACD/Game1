@@ -10,24 +10,22 @@ class partner {
   }
   void display() {
     image(peter, x, y, peterlength, peterheight);
-    if (keyPressed) {
-      if (key == '4') {
-        if (x>=0) {
-          x-=5;
-        }
+    if (BlackBox.isKeyDown(BlackBox.VK_J)) {
+      if (x>=0) {
+        x-=5;
       }
-      if (key == '6') {
-        if (x+peterlength<=width) {
-          x+=5;
-        }
+    }
+    if (BlackBox.isKeyDown(BlackBox.VK_L)) {
+      if (x+peterlength<=width) {
+        x+=5;
       }
     }
     PeterCenterX=.5*(x+peterlength);
   }
-//IsHit boolean needs to account for the left edge of bullet hitting players
+  //IsHit boolean needs to account for the left edge of bullet hitting players
   boolean PeterIsHit(float mx, float my) {
-//    if (my==peterheight && x<mx && x+peterlength>mx) {
-    if (my==peterheight && dist(PeterCenterX,peterheight,mx,my)<50) {
+    //    if (my==peterheight && x<mx && x+peterlength>mx) {
+    if (my==peterheight && dist(PeterCenterX, peterheight, mx, my)<50) {
       print("peterhit");
       return true;
     }
