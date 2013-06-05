@@ -27,6 +27,8 @@ int scoreii=0; //player 2's score
 void setup() {
   size(750, 750);
   donut = loadImage("Donut.png");
+  donut1 = loadImage("Donut1.png");
+  donut2 = loadImage("Donut2.png");
   background = loadImage("background.gif");
   homer = loadImage("homer.png");
   maggie = loadImage("maggie.png");

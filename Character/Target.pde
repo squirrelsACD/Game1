@@ -19,9 +19,9 @@ class target {
     maxdist=r;
   }
   void display() {
-    imageMode(CENTER);
-    image(donut, x, y, d, d);
-    imageMode(CORNER);
+    //    imageMode(CENTER);
+    //    image(donut, x, y, d, d);
+    //    imageMode(CORNER);
     //    noStroke();
     //    fill(0, 0, 255);
     //    ellipse(x, y, d, d);
@@ -30,12 +30,21 @@ class target {
   void drop() {
     if (hit==0) {
       speed=random(1, 1);
+      imageMode(CENTER);
+      image(donut, x, y, d, d);
+      imageMode(CORNER);
     }
     if (hit==1) {
       speed=random(2, 2);
+      imageMode(CENTER);
+      image(donut1, x, y, d, d);
+      imageMode(CORNER);
     }
     if (hit==2) {
       speed=random(3, 3);
+      imageMode(CENTER);
+      image(donut2, x, y, d, d);
+      imageMode(CORNER);
     }
 
     x+=speed;
