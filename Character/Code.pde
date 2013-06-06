@@ -105,6 +105,14 @@ void draw() {
           mytarget.remove(ti);
         }
       }
+      for(int bi=0; bi<mybullet.size();bi++){
+        bullet b = (bullet)mybullet.get(bi);
+        if(pb.isTouching(b.x, b.y)){
+          mybullet.remove(bi);
+          mypartnerbullet.remove(pbi);
+        }
+      }
+      
       if (t.isTouching(pb.x+pb.stewielength, pb.y)) {
         t.hit++;
         scoreii+=2*t.hit;
