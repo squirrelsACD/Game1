@@ -10,6 +10,10 @@ PImage marge;
 PImage donut;
 PImage donut1;
 PImage donut2;
+import ddf.minim.*;
+
+AudioPlayer player;
+Minim minim;
 character mycharacter;
 partner mypartner;
 ArrayList mytarget = new ArrayList();
@@ -41,6 +45,9 @@ void setup() {
   mycharacter = new character();
   mypartner = new partner();
   BlackBox.init(this);
+  minim = new Minim(this);
+  player = minim.loadFile("Dumpster Baby.mp3");
+  player.play();
 }
 
 void draw() {
@@ -153,5 +160,10 @@ void keyReleased() {
   if (key == 'i' || key == 'I') {
     mypartnerbullet.add(new partnerbullet());
   }
+}
+void stop(){
+  player.close();
+  minim.stop();
+  super.stop();
 }
 
