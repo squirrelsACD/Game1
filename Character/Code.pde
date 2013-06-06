@@ -10,6 +10,7 @@ PImage stewie;
 PImage brian;
 PImage bart;
 PImage lois;
+PFont myFont;
 PImage marge;
 PImage donut;
 PImage donut1;
@@ -79,9 +80,11 @@ void draw() {
     else if (gamestart==true) {
 <<<<<<< HEAD
   image(background, 0, 0, displayWidth, displayHeight);
+  myFont = createFont("Comic Sans MS Bold", 32);
+  textFont(myFont);
   textSize(25);
   fill(255);
-  text("P2 Score:", width/10, height/7-50);
+  text("P2 Score:", width/45, height/7-50);
   text(scoreii, width/10, height/7);
   text("lives left:", width-width/10-120, height/7);
   text(mypartner.life, width-width/10, height/7);
