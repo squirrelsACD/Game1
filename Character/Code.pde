@@ -10,6 +10,9 @@ PImage marge;
 PImage donut;
 PImage donut1;
 PImage donut2;
+PImage Begin;
+PImage startscreen;
+PImage pause;
 character mycharacter;
 partner mypartner;
 ArrayList lifeUp1 = new ArrayList();
@@ -30,9 +33,13 @@ int currentPrizeTimer2;
 int oldPrizeTimer2;
 int scorei=0; //player 1's score
 int scoreii=0; //player 2's score
-
+boolean pauseB=false;
+boolean gamestart=false;
 void setup() {
   size(750, 750);
+  Begin = loadImage("Begin.png");
+  pause = loadImage("PauseScreen.jpg");
+  startscreen = loadImage("StartScreen.jpg");
   donut = loadImage("Donut.png");
   donut1 = loadImage("Donut1.png");
   donut2 = loadImage("Donut2.png");
@@ -51,6 +58,18 @@ void setup() {
 }
 
 void draw() {
+  StartTheGame();
+  if (pauseB==true) {
+    image(pause, 0, 0, 750, 750);
+  }
+  else if (pauseB==false) {
+    if (gamestart==false) {
+      image(startscreen, 0, 0, 750, 750);
+      imageMode(CENTER);
+      image(Begin, width/2 , 600 , 300, 300);
+      imageMode(CORNER);
+    }
+    else if (gamestart==true) {
   image(background, 0, 0, displayWidth, displayHeight);
   textSize(25);
   fill(255);
@@ -197,6 +216,8 @@ void draw() {
     lifeUp2.add(new lifeUpTwo());
     lifeDown2.add(new lifeDownTwo());
   }
+    }
+  }
 }
 void keyReleased() {
   if (key == 'w' || key == 'W') {
@@ -206,4 +227,14 @@ void keyReleased() {
     mypartnerbullet.add(new partnerbullet());
   }
 }
+void StartTheGame() {
+  if (mousePressed && (mouseButton ==LEFT)) {
+    gamestart=true;
+  }
+}
+  void mousePressed () {
+    if (mouseButton ==RIGHT) {
+    {pauseB=!pauseB;}}
+  }
+
 
