@@ -29,19 +29,19 @@ class target {
 
   void drop() {
     if (hit==0) {
-      speed=random(1, 1);
+      speed=random(1, 2);
       imageMode(CENTER);
       image(donut, x, y, d, d);
       imageMode(CORNER);
     }
     if (hit==1) {
-      speed=random(2, 2);
+      speed=random(3, 4);
       imageMode(CENTER);
       image(donut1, x, y, d, d);
       imageMode(CORNER);
     }
     if (hit==2) {
-      speed=random(3, 3);
+      speed=random(5, 6);
       imageMode(CENTER);
       image(donut2, x, y, d, d);
       imageMode(CORNER);
