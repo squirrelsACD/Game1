@@ -1,7 +1,3 @@
-import ddf.minim.*;
-AudioPlayer DumpsterBaby;
-AudioPlayer Fries;
-Minim minim;
 PImage background;
 PImage homer;
 PImage maggie;
@@ -10,7 +6,6 @@ PImage stewie;
 PImage brian;
 PImage bart;
 PImage lois;
-PFont myFont;
 PImage marge;
 PImage donut;
 PImage donut1;
@@ -57,9 +52,6 @@ void setup() {
   bart = loadImage("bartcounter.png");
   lois = loadImage("griffinlife.png");
   marge = loadImage("margelife.png");
-  minim = new Minim(this);
-  DumpsterBaby = minim.loadFile("Dumpster Baby.mp3");
-  Fries = minim.loadFile("Fries.mp3");
   mycharacter = new character();
   mypartner = new partner();
   BlackBox.init(this);
@@ -74,17 +66,14 @@ void draw() {
     if (gamestart==false) {
       image(startscreen, 0, 0, 750, 750);
       imageMode(CENTER);
-      image(Begin, width/2, 600, 300, 300);
+      image(Begin, width/2 , 600 , 300, 300);
       imageMode(CORNER);
     }
     else if (gamestart==true) {
-<<<<<<< HEAD
   image(background, 0, 0, displayWidth, displayHeight);
-  myFont = createFont("Comic Sans MS Bold", 32);
-  textFont(myFont);
   textSize(25);
   fill(255);
-  text("P2 Score:", width/45, height/7-50);
+  text("P2 Score:", width/10, height/7-50);
   text(scoreii, width/10, height/7);
   text("lives left:", width-width/10-120, height/7);
   text(mypartner.life, width-width/10, height/7);
@@ -109,169 +98,133 @@ void draw() {
         mybullet.remove(bi);
         if (t.hit==3) {
           mytarget.remove(ti);
-=======
-      image(background, 0, 0, displayWidth, displayHeight);
-      textSize(25);
-      fill(255);
-      text("P2 Score:", width/10, height/7-50);
-      text(scoreii, width/10, height/7);
-      text("lives left:", width-width/10-120, height/7);
-      text(mypartner.life, width-width/10, height/7);
-      textSize(25);
-      fill(255);
-      text("P1 Score:", width/1.2, height/1.15-50);
-      text(scorei, width/1.2, height/1.15);
-      text("lives left:", width-width/1.2-120, height/1.15);
-      text(mycharacter.life, width-width/1.2+20, height/1.15);
-      mycharacter.display();
-      mypartner.display();
-      for (int ti=0; ti<mytarget.size();ti++) {
-        target t =(target)mytarget.get(ti);
-        t.display();
-        t.drop();
-        //when character's bullet hits the target and to increase the score
-        for (int bi=0; bi<mybullet.size();bi++) {
-          bullet b = (bullet)mybullet.get(bi);
-          if (t.isTouching(b.x, b.y)) {
-            t.hit++;
-            scorei+=2*t.hit;
-            mybullet.remove(bi);
-            if (t.hit==3) {
-              mytarget.remove(ti);
-            }
-          }
-          if (t.isTouching(b.x+b.maggielength, b.y)) {
-            t.hit++;
-            scorei+=2*t.hit;
-            mybullet.remove(bi);
-            if (t.hit==3) {
-              mytarget.remove(ti);
-            }
-          }
-          if (mypartner.PeterIsHit(b.MaggieCenterX, b.MaggieCenterY)) {
-            mybullet.remove(bi);
-            mypartner.life=mypartner.life-1;
-          }
->>>>>>> 3aacfc41c6a6d51b431f68e6fe4f5175aded39dc
-        }
-        //when partner's bullet hits the target and to increase the score
-        for (int pbi=0; pbi<mypartnerbullet.size();pbi++) {
-          partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
-          if (t.isTouching(pb.x, pb.y)) {
-            t.hit++;
-            scoreii+=2*t.hit;
-            mypartnerbullet.remove(pbi);
-            if (t.hit==3) {
-              mytarget.remove(ti);
-            }
-          }
-          for (int bi=0; bi<mybullet.size();bi++) {
-            bullet b = (bullet)mybullet.get(bi);
-            if (pb.isTouching(b.x, b.y)) {
-              mybullet.remove(bi);
-              mypartnerbullet.remove(pbi);
-            }
-          }
-
-          if (t.isTouching(pb.x+pb.stewielength, pb.y)) {
-            t.hit++;
-            scoreii+=2*t.hit;
-            mypartnerbullet.remove(pbi);
-            if (t.hit==3) {
-              mytarget.remove(ti);
-            }
-          }
-          if (mycharacter.HomerIsHit(pb.x, pb.y)) {
-            mypartnerbullet.remove(pbi);
-            mycharacter.life=mycharacter.life-1;
-          }
         }
       }
-      //why does this move extremely fast when placed on line 62
-      for (int bi=0; bi<mybullet.size();bi++) {
+      if (t.isTouching(b.x+b.maggielength, b.y)) {
+        t.hit++;
+        scorei+=2*t.hit;
+        mybullet.remove(bi);
+        if (t.hit==3) {
+          mytarget.remove(ti);
+        }
+      }
+      if (mypartner.PeterIsHit(b.MaggieCenterX, b.MaggieCenterY)) {
+        mybullet.remove(bi);
+        mypartner.life=mypartner.life-1;
+      }
+    }
+    //when partner's bullet hits the target and to increase the score
+    for (int pbi=0; pbi<mypartnerbullet.size();pbi++) {
+      partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
+      if (t.isTouching(pb.x, pb.y)) {
+        t.hit++;
+        scoreii+=2*t.hit;
+        mypartnerbullet.remove(pbi);
+        if (t.hit==3) {
+          mytarget.remove(ti);
+        }
+      }
+      for(int bi=0; bi<mybullet.size();bi++){
         bullet b = (bullet)mybullet.get(bi);
-        b.display();
-        b.move();
-      }
-      for (int pbi=0; pbi<mypartnerbullet.size(); pbi++) {
-        partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
-        pb.display();
-        pb.move();
-      }
-      //to drop new targets
-      currentTimer=millis();
-      if (currentTimer-oldTimer>timer) {
-        oldTimer=currentTimer;
-        mytarget.add(new target());
-      }
-      //to remove the bullets after they leave the screen
-      for (int bi=0; bi<mybullet.size();bi++) {
-        bullet b = (bullet)mybullet.get(bi);
-        if (b.y<0) {
+        if(pb.isTouching(b.x, b.y)){
           mybullet.remove(bi);
-        }
-      }
-      for (int pbi=0; pbi<mypartnerbullet.size(); pbi++) {
-        partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
-        if (pb.y<0) {
           mypartnerbullet.remove(pbi);
         }
       }
-      //The following code increases/decrease life. It is not yet coded to do so.
-      for (int lui=0; lui<lifeUp1.size(); lui++) {
-        lifeUp lu = (lifeUp)lifeUp1.get(lui);
-        lu.display();
-        lu.drop();
-        if (lu.y>height || lu.y<0) {
-          lifeUp1.remove(lui);
+      
+      if (t.isTouching(pb.x+pb.stewielength, pb.y)) {
+        t.hit++;
+        scoreii+=2*t.hit;
+        mypartnerbullet.remove(pbi);
+        if (t.hit==3) {
+          mytarget.remove(ti);
         }
       }
-      for (int ldi=0; ldi<lifeDown1.size(); ldi++) {
-        lifeDown ld = (lifeDown)lifeDown1.get(ldi);
-        ld.display();
-        ld.drop();
-        if (ld.y>height || ld.y<0) {
-          lifeDown1.remove(ldi);
-        }
-      }
-
-      currentPrizeTimer=millis();
-      if (currentPrizeTimer-oldPrizeTimer>prizeTimer) {
-        oldPrizeTimer=currentPrizeTimer;
-        lifeUp1.add(new lifeUp());
-        lifeDown1.add(new lifeDown());
-      }
-
-      for (int luii=0; luii<lifeUp2.size(); luii++) {
-        lifeUpTwo lu2 = (lifeUpTwo)lifeUp2.get(luii);
-        lu2.display();
-        lu2.drop();
-        if (lu2.y>height || lu2.y<0) {
-          lifeUp2.remove(luii);
-        }
-      }
-      for (int ldii=0; ldii<lifeDown2.size(); ldii++) {
-        lifeDownTwo ld2 = (lifeDownTwo) lifeDown2.get(ldii);
-        ld2.display();
-        ld2.drop();
-        if (ld2.y>height || ld2.y<0) {
-          lifeDown2.remove(ldii);
-        }
-      }
-
-      currentPrizeTimer2=millis();
-      if (currentPrizeTimer2-oldPrizeTimer2>prizeTimer2) {
-        oldPrizeTimer2=currentPrizeTimer2;
-        lifeUp2.add(new lifeUpTwo());
-        lifeDown2.add(new lifeDownTwo());
+      if (mycharacter.HomerIsHit(pb.x, pb.y)) {
+        mypartnerbullet.remove(pbi);
+        mycharacter.life=mycharacter.life-1;
       }
     }
   }
-  if (scorei>scoreii) {
-    DumpsterBaby.play();
+  //why does this move extremely fast when placed on line 62
+  for (int bi=0; bi<mybullet.size();bi++) {
+    bullet b = (bullet)mybullet.get(bi);
+    b.display();
+    b.move();
   }
-  if (scorei<scoreii) {
-    Fries.play();
+  for (int pbi=0; pbi<mypartnerbullet.size(); pbi++) {
+    partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
+    pb.display();
+    pb.move();
+  }
+  //to drop new targets
+  currentTimer=millis();
+  if (currentTimer-oldTimer>timer) {
+    oldTimer=currentTimer;
+    mytarget.add(new target());
+  }
+  //to remove the bullets after they leave the screen
+  for (int bi=0; bi<mybullet.size();bi++) {
+    bullet b = (bullet)mybullet.get(bi);
+    if (b.y<0) {
+      mybullet.remove(bi);
+    }
+  }
+  for (int pbi=0; pbi<mypartnerbullet.size(); pbi++) {
+    partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
+    if (pb.y<0) {
+      mypartnerbullet.remove(pbi);
+    }
+  }
+  //The following code increases/decrease life. It is not yet coded to do so.
+  for (int lui=0; lui<lifeUp1.size(); lui++) {
+    lifeUp lu = (lifeUp)lifeUp1.get(lui);
+    lu.display();
+    lu.drop();
+    if (lu.y>height || lu.y<0) {
+      lifeUp1.remove(lui);
+    }
+  }
+  for (int ldi=0; ldi<lifeDown1.size(); ldi++) {
+    lifeDown ld = (lifeDown)lifeDown1.get(ldi);
+    ld.display();
+    ld.drop();
+    if (ld.y>height || ld.y<0) {
+      lifeDown1.remove(ldi);
+    }
+  }
+
+  currentPrizeTimer=millis();
+  if (currentPrizeTimer-oldPrizeTimer>prizeTimer) {
+    oldPrizeTimer=currentPrizeTimer;
+    lifeUp1.add(new lifeUp());
+    lifeDown1.add(new lifeDown());
+  }
+
+  for (int luii=0; luii<lifeUp2.size(); luii++) {
+    lifeUpTwo lu2 = (lifeUpTwo)lifeUp2.get(luii);
+    lu2.display();
+    lu2.drop();
+    if (lu2.y>height || lu2.y<0) {
+      lifeUp2.remove(luii);
+    }
+  }
+  for (int ldii=0; ldii<lifeDown2.size(); ldii++) {
+    lifeDownTwo ld2 = (lifeDownTwo) lifeDown2.get(ldii);
+    ld2.display();
+    ld2.drop();
+    if (ld2.y>height || ld2.y<0) {
+      lifeDown2.remove(ldii);
+    }
+  }
+
+  currentPrizeTimer2=millis();
+  if (currentPrizeTimer2-oldPrizeTimer2>prizeTimer2) {
+    oldPrizeTimer2=currentPrizeTimer2;
+    lifeUp2.add(new lifeUpTwo());
+    lifeDown2.add(new lifeDownTwo());
+  }
+    }
   }
 }
 void keyReleased() {
@@ -287,11 +240,9 @@ void StartTheGame() {
     gamestart=true;
   }
 }
-void mousePressed () {
-  if (mouseButton == RIGHT) {
-    {
-      pauseB=!pauseB;
-    }
+  void mousePressed () {
+    if (mouseButton ==RIGHT) {
+    {pauseB=!pauseB;}}
   }
-}
+
 
