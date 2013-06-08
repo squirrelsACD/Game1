@@ -92,6 +92,33 @@ void draw() {
       text(mycharacter.life, width-width/1.2+20, height/1.15);
       mycharacter.display();
       mypartner.display();
+      for (int bi=0; bi<mybullet.size();bi++) {
+        bullet b = (bullet)mybullet.get(bi);
+        if (mypartner.PeterIsHit(b.x, b.y)) {
+          mybullet.remove(bi);
+          mypartner.life=mypartner.life-1;
+        }
+        //30 in the following piece of code is stewey's length
+        else {
+          if (mypartner.PeterIsHit(b.x+30, b.y)) {
+            mybullet.remove(bi);
+            mypartner.life=mypartner.life-1;
+          }
+        }
+      }
+      for (int pbi=0; pbi<mypartnerbullet.size(); pbi++) {
+        partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
+        if (mycharacter.HomerIsHit(pb.x, pb.y)) {
+          mypartnerbullet.remove(pbi);
+          mycharacter.life=mycharacter.life-1;
+        }
+        else {
+          if (mycharacter.HomerIsHit(pb.x+30, pb.y)) {
+            mypartnerbullet.remove(pbi);
+            mycharacter.life=mycharacter.life-1;
+          }
+        }
+      }
       for (int ti=0; ti<mytarget.size();ti++) {
         target t =(target)mytarget.get(ti);
         t.display();
@@ -114,10 +141,6 @@ void draw() {
             if (t.hit==3) {
               mytarget.remove(ti);
             }
-          }
-          if (mypartner.PeterIsHit(b.MaggieCenterX, b.MaggieCenterY)) {
-            mybullet.remove(bi);
-            mypartner.life=mypartner.life-1;
           }
         }
         //when partner's bullet hits the target and to increase the score
@@ -147,13 +170,8 @@ void draw() {
               mytarget.remove(ti);
             }
           }
-          if (mycharacter.HomerIsHit(pb.x, pb.y)) {
-            mypartnerbullet.remove(pbi);
-            mycharacter.life=mycharacter.life-1;
-          }
         }
       }
-      //why does this move extremely fast when placed on line 62
       for (int bi=0; bi<mybullet.size();bi++) {
         bullet b = (bullet)mybullet.get(bi);
         b.display();
