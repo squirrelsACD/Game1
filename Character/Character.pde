@@ -35,7 +35,7 @@ class character {
     HomerCenterX=.5*(x+homerlength);
   }
   boolean HomerIsHit(float mx, float my) {
-    if (my==y && x<mx && x+homerlength>mx) {
+    if (my==y+50 && x+10<mx && x+homerlength>mx+10) {
       print("homerhit");
       return true;
     }

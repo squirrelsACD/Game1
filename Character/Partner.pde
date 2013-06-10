@@ -24,8 +24,8 @@ class partner {
   }
   //IsHit boolean needs to account for the left edge of bullet hitting players
   boolean PeterIsHit(float mx, float my) {
-    //    if (my==peterheight && x<mx && x+peterlength>mx) {
-    if (my==peterheight && dist(PeterCenterX, peterheight, mx, my)<50) {
+    if (my==peterheight-50 && x+10<mx && x+peterlength>mx+10) {
+    //if (my==peterheight && dist(PeterCenterX, peterheight, mx, my)<50) {
       print("peterhit");
       return true;
     }

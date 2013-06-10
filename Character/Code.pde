@@ -10,7 +10,6 @@ PImage stewie;
 PImage brian;
 PImage bart;
 PImage lois;
-PFont myFont;
 PImage marge;
 PImage donut;
 PImage donut1;
@@ -78,38 +77,6 @@ void draw() {
       imageMode(CORNER);
     }
     else if (gamestart==true) {
-<<<<<<< HEAD
-  image(background, 0, 0, displayWidth, displayHeight);
-  myFont = createFont("Comic Sans MS Bold", 32);
-  textFont(myFont);
-  textSize(25);
-  fill(255);
-  text("P2 Score:", width/45, height/7-50);
-  text(scoreii, width/10, height/7);
-  text("lives left:", width-width/10-120, height/7);
-  text(mypartner.life, width-width/10, height/7);
-  textSize(25);
-  fill(255);
-  text("P1 Score:", width/1.2, height/1.15-50);
-  text(scorei, width/1.2, height/1.15);
-  text("lives left:", width-width/1.2-120, height/1.15);
-  text(mycharacter.life, width-width/1.2+20, height/1.15);
-  mycharacter.display();
-  mypartner.display();
-  for (int ti=0; ti<mytarget.size();ti++) {
-    target t =(target)mytarget.get(ti);
-    t.display();
-    t.drop();
-    //when character's bullet hits the target and to increase the score
-    for (int bi=0; bi<mybullet.size();bi++) {
-      bullet b = (bullet)mybullet.get(bi);
-      if (t.isTouching(b.x, b.y)) {
-        t.hit++;
-        scorei+=2*t.hit;
-        mybullet.remove(bi);
-        if (t.hit==3) {
-          mytarget.remove(ti);
-=======
       image(background, 0, 0, displayWidth, displayHeight);
       textSize(25);
       fill(255);
@@ -125,6 +92,33 @@ void draw() {
       text(mycharacter.life, width-width/1.2+20, height/1.15);
       mycharacter.display();
       mypartner.display();
+      for (int bi=0; bi<mybullet.size();bi++) {
+        bullet b = (bullet)mybullet.get(bi);
+        if (mypartner.PeterIsHit(b.x, b.y)) {
+          mybullet.remove(bi);
+          mypartner.life=mypartner.life-1;
+        }
+        //30 in the following piece of code is stewey's length
+        else {
+          if (mypartner.PeterIsHit(b.x+30, b.y)) {
+            mybullet.remove(bi);
+            mypartner.life=mypartner.life-1;
+          }
+        }
+      }
+      for (int pbi=0; pbi<mypartnerbullet.size(); pbi++) {
+        partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
+        if (mycharacter.HomerIsHit(pb.x, pb.y)) {
+          mypartnerbullet.remove(pbi);
+          mycharacter.life=mycharacter.life-1;
+        }
+        else {
+          if (mycharacter.HomerIsHit(pb.x+30, pb.y)) {
+            mypartnerbullet.remove(pbi);
+            mycharacter.life=mycharacter.life-1;
+          }
+        }
+      }
       for (int ti=0; ti<mytarget.size();ti++) {
         target t =(target)mytarget.get(ti);
         t.display();
@@ -148,11 +142,6 @@ void draw() {
               mytarget.remove(ti);
             }
           }
-          if (mypartner.PeterIsHit(b.MaggieCenterX, b.MaggieCenterY)) {
-            mybullet.remove(bi);
-            mypartner.life=mypartner.life-1;
-          }
->>>>>>> 3aacfc41c6a6d51b431f68e6fe4f5175aded39dc
         }
         //when partner's bullet hits the target and to increase the score
         for (int pbi=0; pbi<mypartnerbullet.size();pbi++) {
@@ -181,13 +170,8 @@ void draw() {
               mytarget.remove(ti);
             }
           }
-          if (mycharacter.HomerIsHit(pb.x, pb.y)) {
-            mypartnerbullet.remove(pbi);
-            mycharacter.life=mycharacter.life-1;
-          }
         }
       }
-      //why does this move extremely fast when placed on line 62
       for (int bi=0; bi<mybullet.size();bi++) {
         bullet b = (bullet)mybullet.get(bi);
         b.display();
@@ -288,7 +272,7 @@ void StartTheGame() {
   }
 }
 void mousePressed () {
-  if (mouseButton == RIGHT) {
+  if (mouseButton ==RIGHT) {
     {
       pauseB=!pauseB;
     }
