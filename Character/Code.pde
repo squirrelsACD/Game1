@@ -2,6 +2,7 @@ import ddf.minim.*;
 AudioPlayer DumpsterBaby;
 AudioPlayer Fries;
 Minim minim;
+PFont myFont;
 PImage background;
 PImage homer;
 PImage maggie;
@@ -79,10 +80,12 @@ void draw() {
     else if (gamestart==true) {
       image(background, 0, 0, displayWidth, displayHeight);
       textSize(25);
+      myFont = createFont("Comic Sans MS Bold", 25);
+      textFont(myFont);
       fill(255);
-      text("P2 Score:", width/10, height/7-50);
-      text(scoreii, width/10, height/7);
-      text("lives left:", width-width/10-120, height/7);
+      text("P2 Score:", width/24, height/7-50);
+      text(scoreii, width/24, height/7);
+      text("lives left:", width-width/9-120, height/7);
       text(mypartner.life, width-width/10, height/7);
       textSize(25);
       fill(255);
