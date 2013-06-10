@@ -48,7 +48,7 @@ void setup() {
   donut = loadImage("Donut.png");
   donut1 = loadImage("Donut1.png");
   donut2 = loadImage("Donut2.png");
-  background = loadImage("background.gif");
+  background = loadImage("background.jpg");
   homer = loadImage("homer.png");
   maggie = loadImage("maggie.png");
   peter = loadImage("peter.png");
@@ -78,7 +78,7 @@ void draw() {
       imageMode(CORNER);
     }
     else if (gamestart==true) {
-      image(background, 0, 0, displayWidth, displayHeight);
+      image(background, 0, 0, width, height);
       textSize(25);
       myFont = createFont("Comic Sans MS Bold", 25);
       textFont(myFont);
