@@ -18,6 +18,9 @@ PImage donut2;
 PImage Begin;
 PImage startscreen;
 PImage pause;
+PImage homerwins;
+PImage peterwins;
+PImage tie;
 character mycharacter;
 partner mypartner;
 ArrayList lifeUp1 = new ArrayList();
@@ -58,6 +61,9 @@ void setup() {
   lois = loadImage("griffinlife.png");
   marge = loadImage("margelife.png");
   minim = new Minim(this);
+  homerwins = loadImage("gameoverhomerwins.png");
+  peterwins = loadImage("gameoverpeterwins.jpg");
+  tie = loadImage("gameovertie.jpg");
   DumpsterBaby = minim.loadFile("Dumpster Baby.mp3");
   Fries = minim.loadFile("Fries.mp3");
   mycharacter = new character();
@@ -274,6 +280,34 @@ void StartTheGame() {
     gamestart=true;
   }
 }
+void GameOver() {
+  textAlign(CENTER);
+  fill(300, 100, 100);
+  if (mycharacter.life==0 || mypartner.life==0) {
+    if (scorei>scoreii) {
+      image(homerwins, 0, 0, width, height);
+      textSize(50);
+      text("The winner is Homer", width/2, height/2+100);
+    }
+    if (scorei<scoreii) {
+      image(peterwins, 0, 0, width, height);
+      textSize(50);
+      text("The winner is Peter", width/2, height/2+100);
+    }
+    if (scorei==scoreii) {
+      image(tie, 0, 0, width, height);
+      textSize(50);
+      text("It was a tie :O", width/2, height/2+100);
+    }
+    fill(300, 100, 100);
+    textSize(25);
+    text("GAME OVER", width/2, height/2-50);
+    text("Peter's score was : "+ scoreii, width/2, height/2);
+    text("Homer's score was : "+ scorei, width/2, height/2 + 50);
+    noLoop();
+  }
+}
+
 void mousePressed () {
   if (mouseButton ==RIGHT) {
     {
