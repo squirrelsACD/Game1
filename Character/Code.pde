@@ -1,6 +1,7 @@
 import ddf.minim.*;
 AudioPlayer DumpsterBaby;
 AudioPlayer Fries;
+AudioPlayer Doh;
 Minim minim;
 PFont myFont;
 PImage background;
@@ -66,6 +67,7 @@ void setup() {
   tie = loadImage("gameovertie.jpg");
   DumpsterBaby = minim.loadFile("Dumpster Baby.mp3");
   Fries = minim.loadFile("Fries.mp3");
+  Doh = minim.loadFile("Doh.mp3");
   mycharacter = new character();
   mypartner = new partner();
   BlackBox.init(this);
@@ -263,9 +265,16 @@ void draw() {
   if (scorei>scoreii) {
     DumpsterBaby.play();
   }
+  else{
+    DumpsterBaby.pause();
+  }
   if (scorei<scoreii) {
     Fries.play();
   }
+  else{
+    Fries.pause();
+  }
+  
   GameOver();
 }
 void keyReleased() {
@@ -299,6 +308,7 @@ void GameOver() {
       image(tie, 0, 0, width, height);
       textSize(50);
       text("It was a tie :O", width/2, height/2+100);
+      Doh.play();
     }
     fill(300, 100, 100);
     textSize(25);
