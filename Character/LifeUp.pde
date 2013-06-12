@@ -23,9 +23,9 @@ class lifeUp {
   }
 
   boolean TouchesPlayer(float mx, float my) {
-    if (y+margeheight==my && x>mx && x+margelength<mx) {
+    if (y+margeheight>my && y+margeheight<my+100 && x>mx && x+margelength<mx+100) {
       print("lifeincrease");
-      return true;
+      return true; 
     }
     else {
       return false;
