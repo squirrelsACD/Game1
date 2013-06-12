@@ -2,6 +2,8 @@ import ddf.minim.*;
 AudioPlayer DumpsterBaby;
 AudioPlayer Fries;
 AudioPlayer Doh;
+AudioPlayer HomerWin;
+AudioPlayer PeterWin;
 Minim minim;
 PFont myFont;
 PImage background;
@@ -68,6 +70,8 @@ void setup() {
   DumpsterBaby = minim.loadFile("Dumpster Baby.mp3");
   Fries = minim.loadFile("Fries.mp3");
   Doh = minim.loadFile("Doh.mp3");
+  HomerWin = minim.loadFile("The Simpsons.mp3");
+  PeterWin = minim.loadFile("CantTouchMe.mp3");
   mycharacter = new character();
   mypartner = new partner();
   BlackBox.init(this);
@@ -298,11 +302,15 @@ void GameOver() {
       image(homerwins, 0, 0, width, height);
       textSize(50);
       text("The winner is Homer", width/2, height/2+100);
+      DumpsterBaby.pause();
+      HomerWin.play();
     }
     if (scorei<scoreii) {
       image(peterwins, 0, 0, width, height);
       textSize(50);
       text("The winner is Peter", width/2, height/2+100);
+      Fries.pause();
+      PeterWin.play();
     }
     if (scorei==scoreii) {
       image(tie, 0, 0, width, height);
