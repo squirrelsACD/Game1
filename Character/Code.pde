@@ -33,9 +33,12 @@ ArrayList mypartnerbullet = new ArrayList();
 int timer=1000;
 int currentTimer;
 int oldTimer=0;
-float prizeTimer=random(5000, 5000);
+float prizeTimer=random(5000, 10000);
 int currentPrizeTimer;
 int oldPrizeTimer=0;
+float prizeTimerP=random(5000, 10000);
+int currentPrizeTimerP;
+int oldPrizeTimerP=0;
 int scorei=0; //player 1's score
 int scoreii=0; //player 2's score
 boolean pauseB=false;
@@ -225,10 +228,35 @@ void draw() {
         }
       }
       currentPrizeTimer=millis();
+      currentPrizeTimerP=millis();
       if (currentPrizeTimer-oldPrizeTimer>prizeTimer) {
         oldPrizeTimer=currentPrizeTimer;
         lifeUp1.add(new lifeUp());
         print("drop");
+      }
+      else if(currentPrizeTimerP-oldPrizeTimerP>prizeTimerP) {
+        oldPrizeTimerP=currentPrizeTimerP;
+        lifeUp2.add(new lifeUpTwo());
+        print("drop");
+      }
+      for (int lu2i=0; lu2i<lifeUp2.size(); lu2i++) {
+        lifeUpTwo lu2 = (lifeUpTwo)lifeUp2.get(lu2i);
+        lu2.display();
+        lu2.move();
+        if (lu2.y>height || lu2.y<0) {
+          lifeUp2.remove(lu2i);
+        }
+        if (lu2.TouchesPlayer(mypartner.x, mypartner.y)) {
+          lifeUp2.remove(lu2i);
+          mypartner.life=mypartner.life+1;
+        }
+        //30 in the following piece of code is stewey's length
+        else {
+          if (lu2.TouchesPlayer(mypartner.x-30, mypartner.y)) {
+            lifeUp2.remove(lu2i);
+            mypartner.life=mypartner.life+1;
+          }
+        }
       }
     }
   }
