@@ -24,7 +24,7 @@ class lifeUpTwo {
 
   boolean TouchesPlayer(float mx, float my) {
     if (y<my+100 && y>my && x>mx && x+loislength<mx+100) {
-      print("lifeincrease");
+      print("peterlifeincrease");
       return true; 
     }
     else {
