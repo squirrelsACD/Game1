@@ -1,6 +1,11 @@
+int homerpicker;
+int peterpicker;
 import ddf.minim.*;
 AudioPlayer DumpsterBaby;
 AudioPlayer Fries;
+AudioPlayer Doh;
+AudioPlayer HomerWin;
+AudioPlayer PeterWin;
 Minim minim;
 PFont myFont;
 PImage background;
@@ -18,24 +23,27 @@ PImage donut2;
 PImage Begin;
 PImage startscreen;
 PImage pause;
+PImage homerwins;
+PImage peterwins;
+PImage tie;
 character mycharacter;
 partner mypartner;
 ArrayList lifeUp1 = new ArrayList();
 ArrayList lifeUp2 = new ArrayList();
-ArrayList lifeDown1 = new ArrayList();
-ArrayList lifeDown2 = new ArrayList();
+ArrayList myHomerLifeDown = new ArrayList();
+ArrayList myPeterLifeDown = new ArrayList();
 ArrayList mytarget = new ArrayList();
 ArrayList mybullet = new ArrayList();
 ArrayList mypartnerbullet = new ArrayList();
 int timer=1000;
 int currentTimer;
 int oldTimer=0;
-float prizeTimer=random(5000, 20000);
-int currentPrizeTimer;
-int oldPrizeTimer=0;
-float prizeTimer2=random(15000, 30000);
-int currentPrizeTimer2;
-int oldPrizeTimer2;
+float prizeTimerHomer=random(5000, 5000);
+int currentPrizeTimerHomer;
+int oldPrizeTimerHomer=0;
+float prizeTimerPeter=random(5000, 5000);
+int currentPrizeTimerPeter;
+int oldPrizeTimerPeter=0;
 int scorei=0; //player 1's score
 int scoreii=0; //player 2's score
 boolean pauseB=false;
@@ -58,8 +66,14 @@ void setup() {
   lois = loadImage("griffinlife.png");
   marge = loadImage("margelife.png");
   minim = new Minim(this);
+  homerwins = loadImage("gameoverhomerwins.png");
+  peterwins = loadImage("gameoverpeterwins.jpg");
+  tie = loadImage("gameovertie.jpg");
   DumpsterBaby = minim.loadFile("Dumpster Baby.mp3");
   Fries = minim.loadFile("Fries.mp3");
+  Doh = minim.loadFile("Doh.mp3");
+  HomerWin = minim.loadFile("The Simpsons.mp3");
+  PeterWin = minim.loadFile("CantTouchMe.mp3");
   mycharacter = new character();
   mypartner = new partner();
   BlackBox.init(this);
@@ -79,20 +93,16 @@ void draw() {
     }
     else if (gamestart==true) {
       image(background, 0, 0, width, height);
-      textSize(25);
+      textSize(20);
       myFont = createFont("Comic Sans MS Bold", 25);
       textFont(myFont);
-      fill(255);
-      text("P2 Score:", width/24, height/7-50);
-      text(scoreii, width/24, height/7);
-      text("lives left:", width-width/9-120, height/7);
-      text(mypartner.life, width-width/10, height/7);
+      fill(0, 0, 0);
+      text("P2 Score:"+scoreii, width/8, 25);
+      text("lives left:"+mypartner.life, width-width/9, 25);
       textSize(25);
-      fill(255);
-      text("P1 Score:", width/1.2, height/1.15-50);
-      text(scorei, width/1.2, height/1.15);
-      text("lives left:", width-width/1.2-120, height/1.15);
-      text(mycharacter.life, width-width/1.2+20, height/1.15);
+      fill(0, 0, 0);
+      text("P1 Score:"+scorei, width/8, height/1.15);
+      text("lives left:"+mycharacter.life, width-width/9, height/1.15);
       mycharacter.display();
       mypartner.display();
       for (int bi=0; bi<mybullet.size();bi++) {
@@ -204,62 +214,129 @@ void draw() {
           mypartnerbullet.remove(pbi);
         }
       }
-      //The following code increases/decrease life. It is not yet coded to do so.
+      //Homer life increase
       for (int lui=0; lui<lifeUp1.size(); lui++) {
         lifeUp lu = (lifeUp)lifeUp1.get(lui);
         lu.display();
-        lu.drop();
+        lu.move();
         if (lu.y>height || lu.y<0) {
           lifeUp1.remove(lui);
         }
-      }
-      for (int ldi=0; ldi<lifeDown1.size(); ldi++) {
-        lifeDown ld = (lifeDown)lifeDown1.get(ldi);
-        ld.display();
-        ld.drop();
-        if (ld.y>height || ld.y<0) {
-          lifeDown1.remove(ldi);
+        if (lu.MargeTouchesHomer(mycharacter.x, mycharacter.y)) {
+          lifeUp1.remove(lui);
+          mycharacter.life=mycharacter.life+1;
+        }
+        //30 in the following piece of code is stewey's length
+        else {
+          if (lu.MargeTouchesHomer(mycharacter.x+30, mycharacter.y)) {
+            lifeUp1.remove(lui);
+            mycharacter.life=mycharacter.life+1;
+          }
         }
       }
-
-      currentPrizeTimer=millis();
-      if (currentPrizeTimer-oldPrizeTimer>prizeTimer) {
-        oldPrizeTimer=currentPrizeTimer;
-        lifeUp1.add(new lifeUp());
-        lifeDown1.add(new lifeDown());
+      //Homer life decrease
+      for (int hldi=0; hldi<myHomerLifeDown.size(); hldi++) {
+        HomerLifeDown hld = (HomerLifeDown)myHomerLifeDown.get(hldi);
+        hld.display();
+        hld.move();
+        if (hld.y>height || hld.y<0) {
+          myHomerLifeDown.remove(hldi);
+        }
+        if (hld.LoisTouchesHomer(mycharacter.x, mycharacter.y)) {
+          myHomerLifeDown.remove(hldi);
+          mycharacter.life--;
+          scoreii+=50;
+        }
+        else {
+          if (hld.LoisTouchesHomer(mycharacter.x+30, mycharacter.y)) {
+            myHomerLifeDown.remove(hldi);
+            mycharacter.life--;
+            scoreii+=50;
+          }
+        }
       }
-
-      for (int luii=0; luii<lifeUp2.size(); luii++) {
-        lifeUpTwo lu2 = (lifeUpTwo)lifeUp2.get(luii);
+      currentPrizeTimerHomer=millis();
+      currentPrizeTimerPeter=millis();
+      if (currentPrizeTimerHomer-oldPrizeTimerHomer>prizeTimerHomer) {
+        oldPrizeTimerHomer=currentPrizeTimerHomer;
+        homerpicker= int(random(1, 3));
+        if (homerpicker==1) {
+          lifeUp1.add(new lifeUp());
+        }
+        if (homerpicker==2) {
+          myHomerLifeDown.add(new HomerLifeDown());
+        }
+        print("drop");
+      }
+      //difference between if and elseif
+      if (currentPrizeTimerPeter-oldPrizeTimerPeter>prizeTimerPeter) {
+        oldPrizeTimerPeter=currentPrizeTimerPeter;
+        peterpicker= int(random(1, 3));  
+        if (peterpicker==1) {
+          lifeUp2.add(new lifeUpTwo());
+        }
+        if (peterpicker==2) {
+          myPeterLifeDown.add(new PeterLifeDown());
+        }
+        print("drop");
+      }
+      //Peter life increase
+      for (int lu2i=0; lu2i<lifeUp2.size(); lu2i++) {
+        lifeUpTwo lu2 = (lifeUpTwo)lifeUp2.get(lu2i);
         lu2.display();
-        lu2.drop();
+        lu2.move();
         if (lu2.y>height || lu2.y<0) {
-          lifeUp2.remove(luii);
+          lifeUp2.remove(lu2i);
+        }
+        if (lu2.LoisTouchesPeter(mypartner.x, mypartner.y)) {
+          lifeUp2.remove(lu2i);
+          mypartner.life=mypartner.life+1;
+        }
+        //30 in the following piece of code is lois's length
+        else {
+          if (lu2.LoisTouchesPeter(mypartner.x-30, mypartner.y)) {
+            lifeUp2.remove(lu2i);
+            mypartner.life=mypartner.life+1;
+          }
         }
       }
-      for (int ldii=0; ldii<lifeDown2.size(); ldii++) {
-        lifeDownTwo ld2 = (lifeDownTwo) lifeDown2.get(ldii);
-        ld2.display();
-        ld2.drop();
-        if (ld2.y>height || ld2.y<0) {
-          lifeDown2.remove(ldii);
+      //Peter life decrease
+      for (int pldi=0; pldi<myPeterLifeDown.size(); pldi++) {
+        PeterLifeDown pld = (PeterLifeDown)myPeterLifeDown.get(pldi);
+        pld.display();
+        pld.move();
+        if (pld.y>height || pld.y<0) {
+          myPeterLifeDown.remove(pldi);
         }
-      }
-
-      currentPrizeTimer2=millis();
-      if (currentPrizeTimer2-oldPrizeTimer2>prizeTimer2) {
-        oldPrizeTimer2=currentPrizeTimer2;
-        lifeUp2.add(new lifeUpTwo());
-        lifeDown2.add(new lifeDownTwo());
+        if (pld.MargeTouchesPeter(mypartner.x, mypartner.y)) {
+          myPeterLifeDown.remove(pldi);
+          mypartner.life--;
+          scorei+=50;
+        }
+        else {
+          if (pld.MargeTouchesPeter(mypartner.x-30, mypartner.y)) {
+            myPeterLifeDown.remove(pldi);
+            mypartner.life--;
+            scorei+=50;
+          }
+        }
       }
     }
   }
   if (scorei>scoreii) {
     DumpsterBaby.play();
   }
+  else {
+    DumpsterBaby.pause();
+  }
   if (scorei<scoreii) {
     Fries.play();
   }
+  else {
+    Fries.pause();
+  }
+
+  GameOver();
 }
 void keyReleased() {
   if (key == 'w' || key == 'W') {
@@ -274,11 +351,42 @@ void StartTheGame() {
     gamestart=true;
   }
 }
+void GameOver() {
+  textAlign(CENTER);
+  fill(300, 100, 100);
+  if (mycharacter.life==0 || mypartner.life==0) {
+    if (scorei>scoreii) {
+      image(homerwins, 0, 0, width, height);
+      textSize(50);
+      text("The winner is Homer", width/2, height/2+100);
+      DumpsterBaby.pause();
+      HomerWin.play();
+    }
+    if (scorei<scoreii) {
+      image(peterwins, 0, 0, width, height);
+      textSize(50);
+      text("The winner is Peter", width/2, height/2+100);
+      Fries.pause();
+      PeterWin.play();
+    }
+    if (scorei==scoreii) {
+      image(tie, 0, 0, width, height);
+      textSize(50);
+      text("It was a tie :O", width/2, height/2+100);
+      Doh.play();
+    }
+    fill(300, 100, 100);
+    textSize(25);
+    text("GAME OVER", width/2, height/2-50);
+    text("Peter's score was : "+ scoreii, width/2, height/2);
+    text("Homer's score was : "+ scorei, width/2, height/2 + 50);
+    noLoop();
+  }
+}
+
 void mousePressed () {
   if (mouseButton ==RIGHT) {
-    {
-      pauseB=!pauseB;
-    }
+    pauseB=!pauseB;
   }
 }
 
