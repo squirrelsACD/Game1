@@ -67,7 +67,7 @@ void setup() {
   marge = loadImage("margelife.png");
   minim = new Minim(this);
   homerwins = loadImage("gameoverhomerwins.png");
-  peterwins = loadImage("gameoverpeterwins.jpg");
+  peterwins = loadImage("gameoverpeterwins.png");
   tie = loadImage("gameovertie.jpg");
   DumpsterBaby = minim.loadFile("Dumpster Baby.mp3");
   Fries = minim.loadFile("Fries.mp3");
