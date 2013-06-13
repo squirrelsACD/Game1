@@ -259,7 +259,7 @@ void draw() {
       currentPrizeTimerPeter=millis();
       if (currentPrizeTimerHomer-oldPrizeTimerHomer>prizeTimerHomer) {
         oldPrizeTimerHomer=currentPrizeTimerHomer;
-        homerpicker= int(random(1, 2));
+        homerpicker= int(random(1, 3));
         if (homerpicker==1) {
           lifeUp1.add(new lifeUp());
         }
@@ -271,7 +271,7 @@ void draw() {
       //difference between if and elseif
       if (currentPrizeTimerPeter-oldPrizeTimerPeter>prizeTimerPeter) {
         oldPrizeTimerPeter=currentPrizeTimerPeter;
-        peterpicker= int(random(1, 2));  
+        peterpicker= int(random(1, 3));  
         if (peterpicker==1) {
           lifeUp2.add(new lifeUpTwo());
         }
