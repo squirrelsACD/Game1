@@ -1,4 +1,4 @@
-class lifeUpTwo {
+class HomerLifeDown {
   float loislength=30;
   float loisheight=30;
   float x;
@@ -7,9 +7,9 @@ class lifeUpTwo {
   float LoisCenterX;
   float LoisCenterY;
 
-  lifeUpTwo() {
+  HomerLifeDown() {
     x=random(0, width);
-    yspeed=random(-1, -5);
+    yspeed=random(1, 5);
     y=height/2;
   }
   void display() {
@@ -21,9 +21,9 @@ class lifeUpTwo {
     y+=yspeed;
   }
 
-  boolean LoisTouchesPeter(float mx, float my) {
-    if (y<my+mypartner.peterheight && y>my && x>mx && x+loislength<mx+mypartner.peterlength) {
-      print("peterlifeincrease");
+  boolean LoisTouchesHomer(float mx, float my) {
+    if (y+loisheight>my && y+loisheight<my+mycharacter.homerheight && x>mx && x+loisheight<mx+mycharacter.homerlength) {
+      print("homerlifedecrease");
       return true; 
     }
     else {

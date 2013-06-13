@@ -1,3 +1,5 @@
+int homerpicker;
+int peterpicker;
 import ddf.minim.*;
 AudioPlayer DumpsterBaby;
 AudioPlayer Fries;
@@ -28,20 +30,20 @@ character mycharacter;
 partner mypartner;
 ArrayList lifeUp1 = new ArrayList();
 ArrayList lifeUp2 = new ArrayList();
-ArrayList lifeDown1 = new ArrayList();
-ArrayList lifeDown2 = new ArrayList();
+ArrayList myHomerLifeDown = new ArrayList();
+ArrayList myPeterLifeDown = new ArrayList();
 ArrayList mytarget = new ArrayList();
 ArrayList mybullet = new ArrayList();
 ArrayList mypartnerbullet = new ArrayList();
 int timer=1000;
 int currentTimer;
 int oldTimer=0;
-float prizeTimer=random(5000, 10000);
-int currentPrizeTimer;
-int oldPrizeTimer=0;
-float prizeTimerP=random(5000, 10000);
-int currentPrizeTimerP;
-int oldPrizeTimerP=0;
+float prizeTimerHomer=random(5000, 5000);
+int currentPrizeTimerHomer;
+int oldPrizeTimerHomer=0;
+float prizeTimerPeter=random(5000, 5000);
+int currentPrizeTimerPeter;
+int oldPrizeTimerPeter=0;
 int scorei=0; //player 1's score
 int scoreii=0; //player 2's score
 boolean pauseB=false;
@@ -91,17 +93,16 @@ void draw() {
     }
     else if (gamestart==true) {
       image(background, 0, 0, width, height);
-      textSize(25);
+      textSize(20);
       myFont = createFont("Comic Sans MS Bold", 25);
       textFont(myFont);
       fill(0, 0, 0);
-      text("P2 Score:"+scoreii, width/24, 25);
-      text("lives left:"+mypartner.life, width-width/9-120, 25);
+      text("P2 Score:"+scoreii, width/8, 25);
+      text("lives left:"+mypartner.life, width-width/9, 25);
       textSize(25);
       fill(0, 0, 0);
-      text("P1 Score:", width/1.2, height/1.15-50);
-      text(scorei, width/1.2, height/1.15);
-      text("lives left:"+mycharacter.life, width-width/1.2-120, height/1.15);
+      text("P1 Score:"+scorei, width/8, height/1.15);
+      text("lives left:"+mycharacter.life, width-width/9, height/1.15);
       mycharacter.display();
       mypartner.display();
       for (int bi=0; bi<mybullet.size();bi++) {
@@ -213,7 +214,7 @@ void draw() {
           mypartnerbullet.remove(pbi);
         }
       }
-      //The following code increases/decrease life.
+      //Homer life increase
       for (int lui=0; lui<lifeUp1.size(); lui++) {
         lifeUp lu = (lifeUp)lifeUp1.get(lui);
         lu.display();
@@ -221,30 +222,65 @@ void draw() {
         if (lu.y>height || lu.y<0) {
           lifeUp1.remove(lui);
         }
-        if (lu.TouchesPlayer(mycharacter.x, mycharacter.y)) {
+        if (lu.MargeTouchesHomer(mycharacter.x, mycharacter.y)) {
           lifeUp1.remove(lui);
           mycharacter.life=mycharacter.life+1;
         }
         //30 in the following piece of code is stewey's length
         else {
-          if (lu.TouchesPlayer(mycharacter.x+30, mycharacter.y)) {
+          if (lu.MargeTouchesHomer(mycharacter.x+30, mycharacter.y)) {
             lifeUp1.remove(lui);
             mycharacter.life=mycharacter.life+1;
           }
         }
       }
-      currentPrizeTimer=millis();
-      currentPrizeTimerP=millis();
-      if (currentPrizeTimer-oldPrizeTimer>prizeTimer) {
-        oldPrizeTimer=currentPrizeTimer;
-        lifeUp1.add(new lifeUp());
+      //Homer life decrease
+      for (int hldi=0; hldi<myHomerLifeDown.size(); hldi++) {
+        HomerLifeDown hld = (HomerLifeDown)myHomerLifeDown.get(hldi);
+        hld.display();
+        hld.move();
+        if (hld.y>height || hld.y<0) {
+          myHomerLifeDown.remove(hldi);
+        }
+        if (hld.LoisTouchesHomer(mycharacter.x, mycharacter.y)) {
+          myHomerLifeDown.remove(hldi);
+          mycharacter.life--;
+          scoreii+=50;
+        }
+        else {
+          if (hld.LoisTouchesHomer(mycharacter.x+30, mycharacter.y)) {
+            myHomerLifeDown.remove(hldi);
+            mycharacter.life--;
+            scoreii+=50;
+          }
+        }
+      }
+      currentPrizeTimerHomer=millis();
+      currentPrizeTimerPeter=millis();
+      if (currentPrizeTimerHomer-oldPrizeTimerHomer>prizeTimerHomer) {
+        oldPrizeTimerHomer=currentPrizeTimerHomer;
+        homerpicker= int(random(1, 2));
+        if (homerpicker==1) {
+          lifeUp1.add(new lifeUp());
+        }
+        if (homerpicker==2) {
+          myHomerLifeDown.add(new HomerLifeDown());
+        }
         print("drop");
       }
-      else if(currentPrizeTimerP-oldPrizeTimerP>prizeTimerP) {
-        oldPrizeTimerP=currentPrizeTimerP;
-        lifeUp2.add(new lifeUpTwo());
+      //difference between if and elseif
+      if (currentPrizeTimerPeter-oldPrizeTimerPeter>prizeTimerPeter) {
+        oldPrizeTimerPeter=currentPrizeTimerPeter;
+        peterpicker= int(random(1, 2));  
+        if (peterpicker==1) {
+          lifeUp2.add(new lifeUpTwo());
+        }
+        if (peterpicker==2) {
+          myPeterLifeDown.add(new PeterLifeDown());
+        }
         print("drop");
       }
+      //Peter life increase
       for (int lu2i=0; lu2i<lifeUp2.size(); lu2i++) {
         lifeUpTwo lu2 = (lifeUpTwo)lifeUp2.get(lu2i);
         lu2.display();
@@ -252,15 +288,36 @@ void draw() {
         if (lu2.y>height || lu2.y<0) {
           lifeUp2.remove(lu2i);
         }
-        if (lu2.TouchesPlayer(mypartner.x, mypartner.y)) {
+        if (lu2.LoisTouchesPeter(mypartner.x, mypartner.y)) {
           lifeUp2.remove(lu2i);
           mypartner.life=mypartner.life+1;
         }
-        //30 in the following piece of code is stewey's length
+        //30 in the following piece of code is lois's length
         else {
-          if (lu2.TouchesPlayer(mypartner.x-30, mypartner.y)) {
+          if (lu2.LoisTouchesPeter(mypartner.x-30, mypartner.y)) {
             lifeUp2.remove(lu2i);
             mypartner.life=mypartner.life+1;
+          }
+        }
+      }
+      //Peter life decrease
+      for (int pldi=0; pldi<myPeterLifeDown.size(); pldi++) {
+        PeterLifeDown pld = (PeterLifeDown)myPeterLifeDown.get(pldi);
+        pld.display();
+        pld.move();
+        if (pld.y>height || pld.y<0) {
+          myPeterLifeDown.remove(pldi);
+        }
+        if (pld.MargeTouchesPeter(mypartner.x, mypartner.y)) {
+          myPeterLifeDown.remove(pldi);
+          mypartner.life--;
+          scorei+=50;
+        }
+        else {
+          if (pld.MargeTouchesPeter(mypartner.x-30, mypartner.y)) {
+            myPeterLifeDown.remove(pldi);
+            mypartner.life--;
+            scorei+=50;
           }
         }
       }
@@ -269,16 +326,16 @@ void draw() {
   if (scorei>scoreii) {
     DumpsterBaby.play();
   }
-  else{
+  else {
     DumpsterBaby.pause();
   }
   if (scorei<scoreii) {
     Fries.play();
   }
-  else{
+  else {
     Fries.pause();
   }
-  
+
   GameOver();
 }
 void keyReleased() {
@@ -329,9 +386,7 @@ void GameOver() {
 
 void mousePressed () {
   if (mouseButton ==RIGHT) {
-    {
-      pauseB=!pauseB;
-    }
+    pauseB=!pauseB;
   }
 }
 

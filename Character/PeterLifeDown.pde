@@ -1,4 +1,4 @@
-class lifeUp {
+class PeterLifeDown {
   float margelength=30;
   float margeheight=30;
   float x;
@@ -7,9 +7,9 @@ class lifeUp {
   float MargeCenterX;
   float MargeCenterY;
 
-  lifeUp() {
+  PeterLifeDown() {
     x=random(0, width);
-    yspeed=random(1, 5);
+    yspeed=random(-1, -5);
     y=height/2;
   }
   void display() {
@@ -21,9 +21,9 @@ class lifeUp {
     y+=yspeed;
   }
 
-  boolean MargeTouchesHomer(float mx, float my) {
-    if (y+margeheight>my && y+margeheight<my+mycharacter.homerheight && x>mx && x+margelength<mx+mycharacter.homerlength) {
-      print("homerlifeincrease");
+  boolean MargeTouchesPeter(float mx, float my) {
+    if (y<my+mypartner.peterheight && y>my && x>mx && x+margelength<mx+mypartner.peterlength) {
+      print("homerlifedecrease");
       return true; 
     }
     else {
@@ -31,4 +31,3 @@ class lifeUp {
     }
   }
 }
-
