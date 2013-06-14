@@ -1,4 +1,4 @@
-//This is the class for the targets
+//The targets which will be donuts
 class target {
   float x;
   float y;
@@ -18,15 +18,6 @@ class target {
     r=d/2;
     maxdist=r;
   }
-  void display() {
-    //    imageMode(CENTER);
-    //    image(donut, x, y, d, d);
-    //    imageMode(CORNER);
-    //    noStroke();
-    //    fill(0, 0, 255);
-    //    ellipse(x, y, d, d);
-  }
-
   void drop() {
     if (hit==0) {
       speed=random(1, 2);

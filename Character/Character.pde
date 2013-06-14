@@ -33,9 +33,3 @@ class character {
   }
 }
 
-
-
-
-
-//fix the index error if it shows up again
-

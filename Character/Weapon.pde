@@ -1,5 +1,4 @@
-//This is for the bullets.
-
+//Homer's bullets
 class bullet {
   float maggielength=30;
   float maggieheight=30;

@@ -1,5 +1,6 @@
 //This is for the bullets.
 
+//Peter's bullets
 class partnerbullet {
   float stewielength=30;
   float stewieheight=30;

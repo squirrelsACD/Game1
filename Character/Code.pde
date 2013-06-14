@@ -48,9 +48,10 @@ int scorei=0; //player 1's score
 int scoreii=0; //player 2's score
 boolean pauseB=false;
 boolean gamestart=false;
+
 void setup() {
   size(750, 750);
-  Begin = loadImage("Begin.png");
+  Begin = loadImage("startscreen.png");
   pause = loadImage("PauseScreen.jpg");
   startscreen = loadImage("StartScreen.jpg");
   donut = loadImage("Donut.png");
@@ -84,14 +85,14 @@ void draw() {
   if (pauseB==true) {
     image(pause, 0, 0, 750, 750);
   }
-  else if (pauseB==false) {
+  else {
     if (gamestart==false) {
       image(startscreen, 0, 0, 750, 750);
       imageMode(CENTER);
-      image(Begin, width/2, 600, 300, 300);
+      image(Begin, width/2, 675, 300, 150);
       imageMode(CORNER);
     }
-    else if (gamestart==true) {
+    else {
       image(background, 0, 0, width, height);
       textSize(20);
       myFont = createFont("Comic Sans MS Bold", 25);
@@ -134,7 +135,6 @@ void draw() {
       }
       for (int ti=0; ti<mytarget.size();ti++) {
         target t =(target)mytarget.get(ti);
-        t.display();
         t.drop();
         //when character's bullet hits the target and to increase the score
         for (int bi=0; bi<mybullet.size();bi++) {
@@ -335,7 +335,6 @@ void draw() {
   else {
     Fries.pause();
   }
-
   GameOver();
 }
 void keyReleased() {
@@ -347,14 +346,62 @@ void keyReleased() {
   }
 }
 void StartTheGame() {
-  if (mousePressed && (mouseButton ==LEFT)) {
+  if (key==' ') {
     gamestart=true;
   }
 }
 void GameOver() {
   textAlign(CENTER);
-  fill(300, 100, 100);
-  if (mycharacter.life==0 || mypartner.life==0) {
+  fill(255, 0, 255);
+  if (mycharacter.life<=0 || mypartner.life<=0) {
+    for (int pbi=0; pbi<mypartnerbullet.size(); pbi++) {
+      partnerbullet pb = (partnerbullet)mypartnerbullet.get(pbi);
+      if (pb.y>0 && pb.y<height) {
+        mypartnerbullet.remove(pbi);
+      }
+    }
+    for (int bi=0; bi<mybullet.size();bi++) {
+      bullet b = (bullet)mybullet.get(bi);
+      if (b.y>0 && b.y<height) {
+        mybullet.remove(bi);
+      }
+    }
+    for (int ti=0; ti<mytarget.size();ti++) {
+      target t =(target)mytarget.get(ti);
+      if (t.x>0 && t.x<width) {
+        mytarget.remove(ti);
+      }
+    }
+    for (int hldi=0; hldi<myHomerLifeDown.size(); hldi++) {
+      HomerLifeDown hld = (HomerLifeDown)myHomerLifeDown.get(hldi);
+      if (hld.y<height || hld.y>0) {
+        myHomerLifeDown.remove(hldi);
+      }
+    }
+    for (int lui=0; lui<lifeUp1.size(); lui++) {
+      lifeUp lu = (lifeUp)lifeUp1.get(lui);
+      if (lu.y<height || lu.y>0) {
+        lifeUp1.remove(lui);
+      }
+    }
+    for (int lu2i=0; lu2i<lifeUp2.size(); lu2i++) {
+      lifeUpTwo lu2 = (lifeUpTwo)lifeUp2.get(lu2i);
+      if (lu2.y<height || lu2.y>0) {
+        lifeUp2.remove(lu2i);
+      }
+    }
+    for (int pldi=0; pldi<myPeterLifeDown.size(); pldi++) {
+      PeterLifeDown pld = (PeterLifeDown)myPeterLifeDown.get(pldi);
+      if (pld.y<height || pld.y>0) {
+        myPeterLifeDown.remove(pldi);
+      }
+    }
+    for (int lu2i=0; lu2i<lifeUp2.size(); lu2i++) {
+      lifeUpTwo lu2 = (lifeUpTwo)lifeUp2.get(lu2i);
+      if (lu2.y<height || lu2.y>0) {
+        lifeUp2.remove(lu2i);
+      }
+    }
     if (scorei>scoreii) {
       image(homerwins, 0, 0, width, height);
       textSize(50);
@@ -362,30 +409,39 @@ void GameOver() {
       DumpsterBaby.pause();
       HomerWin.play();
     }
-    if (scorei<scoreii) {
+    else if (scorei<scoreii) {
       image(peterwins, 0, 0, width, height);
       textSize(50);
       text("The winner is Peter", width/2, height/2+100);
       Fries.pause();
       PeterWin.play();
     }
-    if (scorei==scoreii) {
+    else {
       image(tie, 0, 0, width, height);
       textSize(50);
       text("It was a tie :O", width/2, height/2+100);
       Doh.play();
     }
-    fill(300, 100, 100);
+    fill(255, 0, 255);
     textSize(25);
-    text("GAME OVER", width/2, height/2-50);
-    text("Peter's score was : "+ scoreii, width/2, height/2);
-    text("Homer's score was : "+ scorei, width/2, height/2 + 50);
-    noLoop();
+    text("GAME OVER...Press enter", width/2, height/2-50);
+    text("Peter's score: "+ scoreii, width/2, height/2);
+    text("Homer's score: "+ scorei, width/2, height/2 + 50);
+    println(" gamestart: " + gamestart);
+    gamestart=false;
+    println(" gamestart: " + gamestart);
+    if (key == ENTER || key == RETURN) {
+      mypartner.x = width/2;
+      mycharacter.x = width/2;
+      mycharacter.life=3;
+      mypartner.life=3;
+      scorei=0;
+      scoreii=0;
+    }
   }
 }
-
 void mousePressed () {
-  if (mouseButton ==RIGHT) {
+  if (mouseButton==RIGHT) {
     pauseB=!pauseB;
   }
 }
