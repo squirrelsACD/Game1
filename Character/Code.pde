@@ -1,6 +1,7 @@
 int homerpicker;
 int peterpicker;
 import ddf.minim.*;
+AudioPlayer ThemeSongs;
 AudioPlayer DumpsterBaby;
 AudioPlayer Fries;
 AudioPlayer Doh;
@@ -73,8 +74,9 @@ void setup() {
   DumpsterBaby = minim.loadFile("Dumpster Baby.mp3");
   Fries = minim.loadFile("Fries.mp3");
   Doh = minim.loadFile("Doh.mp3");
-  HomerWin = minim.loadFile("The Simpsons.mp3");
+  HomerWin = minim.loadFile("Spiderpig.mp3");
   PeterWin = minim.loadFile("CantTouchMe.mp3");
+  ThemeSongs = minim.loadFile("ThemeSongs.mp3");
   mycharacter = new character();
   mypartner = new partner();
   BlackBox.init(this);
@@ -93,6 +95,7 @@ void draw() {
       imageMode(CORNER);
     }
     else {
+      ThemeSongs.pause();
       image(background, 0, 0, width, height);
       textSize(20);
       myFont = createFont("Comic Sans MS Bold", 25);
@@ -406,14 +409,14 @@ void GameOver() {
       image(homerwins, 0, 0, width, height);
       textSize(50);
       text("The winner is Homer", width/2, height/2+100);
-      DumpsterBaby.pause();
+      //      DumpsterBaby.pause();
       HomerWin.play();
     }
     else if (scorei<scoreii) {
       image(peterwins, 0, 0, width, height);
       textSize(50);
       text("The winner is Peter", width/2, height/2+100);
-      Fries.pause();
+      //      Fries.pause();
       PeterWin.play();
     }
     else {
@@ -437,6 +440,9 @@ void GameOver() {
       mypartner.life=3;
       scorei=0;
       scoreii=0;
+      PeterWin.pause();
+      HomerWin.pause();
+      ThemeSongs.play();
     }
   }
 }
