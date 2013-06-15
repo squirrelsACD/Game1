@@ -323,13 +323,13 @@ void draw() {
       }
     }
   }
-  if (scorei>scoreii) {
+  if (scorei>scoreii && mycharacter.life>0 && mypartner.life>0) {
     DumpsterBaby.play();
   }
   else {
     DumpsterBaby.pause();
   }
-  if (scorei<scoreii) {
+  if (scorei<scoreii && mycharacter.life>0 && mypartner.life>0) {
     Fries.play();
   }
   else {
