@@ -96,6 +96,7 @@ void draw() {
     }
     else {
       ThemeSongs.pause();
+      ThemeSongs.rewind();
       image(background, 0, 0, width, height);
       textSize(20);
       myFont = createFont("Comic Sans MS Bold", 25);
@@ -326,13 +327,13 @@ void draw() {
       }
     }
   }
-  if (scorei>scoreii && mycharacter.life>0 && mypartner.life>0) {
+  if (scorei>scoreii && mycharacter.life>0 && mypartner.life>0 && pauseB==false) {
     DumpsterBaby.play();
   }
   else {
     DumpsterBaby.pause();
   }
-  if (scorei<scoreii && mycharacter.life>0 && mypartner.life>0) {
+  if (scorei<scoreii && mycharacter.life>0 && mypartner.life>0 && pauseB==false) {
     Fries.play();
   }
   else {
@@ -351,6 +352,8 @@ void keyReleased() {
 void StartTheGame() {
   if (key==' ') {
     gamestart=true;
+    HomerWin.rewind();
+    PeterWin.rewind();
   }
 }
 void GameOver() {
@@ -443,12 +446,17 @@ void GameOver() {
       PeterWin.pause();
       HomerWin.pause();
       ThemeSongs.play();
+      DumpsterBaby.rewind();
+      Fries.rewind();
     }
   }
 }
 void mousePressed () {
   if (mouseButton==RIGHT) {
     pauseB=!pauseB;
+    ThemeSongs.play();
+    Fries.pause();
+    DumpsterBaby.pause();
   }
 }
 
