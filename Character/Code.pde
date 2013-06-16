@@ -354,6 +354,7 @@ void StartTheGame() {
     gamestart=true;
     HomerWin.rewind();
     PeterWin.rewind();
+    Doh.rewind();
   }
 }
 void GameOver() {
