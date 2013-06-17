@@ -93,6 +93,8 @@ void draw() {
       imageMode(CENTER);
       image(Begin, width/2, 675, 300, 125);
       imageMode(CORNER);
+      textSize(25);
+      text("Press the enter key at anytime to return to the main menu", width/2, height/2+50);
     }
     else {
       ThemeSongs.pause();
