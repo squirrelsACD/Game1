@@ -91,7 +91,7 @@ void draw() {
     if (gamestart==false) {
       image(startscreen, 0, 0, 750, 750);
       imageMode(CENTER);
-      image(Begin, width/2, 675, 300, 150);
+      image(Begin, width/2, 675, 300, 125);
       imageMode(CORNER);
     }
     else {
@@ -453,7 +453,7 @@ void GameOver() {
   }
 }
 void mousePressed () {
-  if (mouseButton==RIGHT) {
+  if (mouseButton==RIGHT && gamestart==true) {
     pauseB=!pauseB;
     ThemeSongs.play();
     Fries.pause();
