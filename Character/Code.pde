@@ -411,6 +411,7 @@ void GameOver() {
       }
     }
     if (scorei>scoreii) {
+      background(255);
       image(homerwins, 0, 0, width, height);
       textSize(50);
       text("The winner is Homer", width/2, height/2+100);
@@ -418,6 +419,7 @@ void GameOver() {
       HomerWin.play();
     }
     else if (scorei<scoreii) {
+      background(255);
       image(peterwins, 0, 0, width, height);
       textSize(50);
       text("The winner is Peter", width/2, height/2+100);
